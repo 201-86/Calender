@@ -1,0 +1,23 @@
+{% extends "layout.html"%}
+{% block content %}
+<form action="{{ url_for('calendar') }}" method="post">
+    {{form.date}}</br>
+    {{form.message(placeholder="message:")}} </br></br>
+    <input type="submit"  value="Enter"></br>
+</form>
+
+<div class="calendar">
+    <h1>
+        calendar
+        {{month.month}}
+        
+    </h1>
+    {% for d in days %}
+    <div class="day">
+        <p>
+            {{d}}
+        </p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

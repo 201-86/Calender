@@ -1,0 +1,10 @@
+<nav>
+    <a href="/"> Home </a> |
+    {% if is_loggedin == True %}
+    <a href="/calendar"> Calendar </a>
+    {% else %}
+    <a href="/login"> Calendar </a>
+    {% endif %}
+   
+    
+</nav>
