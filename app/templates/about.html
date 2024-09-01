@@ -1,0 +1,9 @@
+{% extends "layout.html"%}
+{% block content %}
+<form action="{{ url_for('about') }}" method="post"></form>
+{{msg}}</br>
+<h1>Welcome to the about page!<br>
+    This website is a project for DTP.<br>
+    it includes a calendar in which you can input a date and a message,<br> and can come back and look at the calendar to check your reminder at anytime!
+</h1>
+{% endblock %}

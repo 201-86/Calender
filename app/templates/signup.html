@@ -4,8 +4,8 @@
 {%if invalid == True%}
 username already taken
 {% endif %}
-<h1>Sign-up below</h1>
-<form action="{{ url_for('signup') }}" method="post">
+<form action="{{ url_for('signup') }}" method="post" class = "signup">
+  <h1>Sign-up below</h1>
       <input id="username" name="username" type="text" placeholder="Enter Your Username" class="textbox"/></br></br>
       <input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br></br>
       <input type="submit"  value="Sign Up"></br></br>
