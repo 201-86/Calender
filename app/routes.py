@@ -5,6 +5,7 @@ import os
 from random import choices
 from string import ascii_letters, digits
 from datetime import date
+from calendar import Calendar
 
 
 
@@ -64,10 +65,10 @@ def login():
         print(str(acc) == str(password), str(acc), str(password))
         if str(acc) == str(password):
             msg = 'Logged in successfully !'
-            resp = make_response(render_template('index.html', msg=msg, is_loggedin=checklogin(request.cookies.get("login_cookie"))))
             cookie = cookee()
-            resp.set_cookie('login_cookie', cookie)
             login_sessions.update({cookie: acc.id})
+            resp = make_response(render_template('index.html', msg=msg, is_loggedin=checklogin(request.cookies.get("login_cookie"))))
+            resp.set_cookie('login_cookie', cookie)
             return resp
         else:
             msg = 'Incorrect username / password !'
@@ -95,22 +96,32 @@ def getdate(year, month, day):
 def calendar():
     form = Add_date()
     month = changedate()
-    if request.method == 'GET':
-        days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35]
-        
-        return render_template("add_date.html", form=form, is_loggedin=checklogin(request.cookies.get("login_cookie")), days=days, month=month)
-    else:
-        if getdate(form.date.data.year, form.date.data.month, form.date.data.day):
-            print("works")
-            new_date = models.date()
-            new_date.year = form.date.data.year
-            new_date.month = form.date.data.month
-            new_date.day = form.date.data.day
-            new_date.message = form.message.data
-            db.session.add(new_date)
-            db.session.commit()
-            return redirect("/")
-        
+    year = month.year.data
+    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    print(month.month.data)
+    try:
+        selectedmonth = month.month.data
+        days = Calendar().monthdayscalendar(int(year), int(month.month.data) + 1)
+    except Exception:
+        selectedmonth = 1
+        days = Calendar().monthdayscalendar(2024, 1)
+    return render_template("add_date.html", form=form, is_loggedin=checklogin(request.cookies.get("login_cookie")), days=days, month=month, selectedmonth=months[int(selectedmonth)])
+
+@app.route('/add_calendar', methods=["GET", "POST"])
+def add_calendar():
+    form = Add_date()
+    if getdate(form.date.data.year, form.date.data.month, form.date.data.day):
+        print("works")
+        new_date = models.date()
+        new_date.year = form.date.data.year
+        new_date.month = form.date.data.month
+        new_date.day = form.date.data.day
+        new_date.message = form.message.data
+        db.session.add(new_date)
+        db.session.commit()
+        return redirect("/")
+
+
 def checklogin(cookie):
     if login_sessions.get(cookie) is not None:
         return True

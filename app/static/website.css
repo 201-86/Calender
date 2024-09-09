@@ -24,6 +24,18 @@ body{
     background:#b3b0b0;
 }                         
 
+.navline{
+  background-color: #000000;
+  border-radius: 25%;
+  height: 40px;
+  width: 2px;
+  top: 25%;
+  left: 15%;
+
+  position: absolute;
+}
+
+
 .login {
   border-radius: 10%;
   background-color: #f2f2f2;
@@ -81,8 +93,10 @@ body{
 
 .wrapper{
   width: 450px;
+  border: 10px outset;
   background: #fff;
   border-radius: 10px;
+  box-shadow: 5px 5px 20px
 }
 
 .wrapper header{
@@ -200,7 +214,7 @@ nav {
   z-index: 1;
 }
 .days li.inactive{
-  color: #aaa;
+  color: #ffffff;
 }
 
 .calendar .weeks li{
